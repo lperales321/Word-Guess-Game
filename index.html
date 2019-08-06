@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+    <head>
+        <meta charset="UTF-8">
+        <title>Word Guess Game</title>
+        <!-- <link src="\assets\javascript\game.js"> -->
+    </head>
+
+    <body>
+
+        <div id="game">
+            Guess the word below.
+            Press a letter to get started.
+        </div>
+      
+        <p id="wordToSolve"></p>
+        <p id="lettersGuessed"></p>
+        <p id="numGuessesRemaining"></p>
+        <p id="winScore"></p>
+        <p id="loseScore"></p>
+      
+        <script type="text/javascript">
+      
+            // Creates an array of words to solve
+            const options = ["krueger", "pennywise", "amityville horror", "carrie", "leatherface", "chucky", "voorhees", "exorcist",
+                             "dracula", "jack torrance", "pinhead", "nosferatu", "the shining", "ghostface", "candyman", "michael myers",
+                             "hannibal lecter", "xenomorph", "jigsaw", "norman bates", "crypt keeper"];
+            const wordToSolve = [];
+            const lettersUsed = [];
+            let wins = 0;
+            let losses = 0;
+            let guessesRemaining = 15;
+
+            // Randomly chooses a word from the options array.
+            let optionChosen = options[Math.floor(Math.random() * options.length)];
+
+            // Sets "blanks" for each letter in word
+            for (let i = 0; i < optionChosen.length; i++) {
+                if (optionChosen[i] !== ' ') {
+                    wordToSolve[i] = '_';
+                }
+                else {
+                    wordToSolve[i] = ' ';
+                }
+            }
+
+            // Display word to solve and the number of guesses remaining
+            document.getElementById("wordToSolve").innerHTML = wordToSolve.join(" ");
+            document.getElementById("numGuessesRemaining").innerHTML = "Number Guesses Remaining: " + guessesRemaining;
+          
+            // This function is run whenever the user presses a key.
+            document.onkeyup = function(event) {
+                
+                // Determines which key was pressed.
+                let userGuess = event.key;
+
+                // Displays the key the user pressed.
+                lettersUsed.push(userGuess);
+                document.getElementById("lettersGuessed").innerHTML = "Letters Used: " + lettersUsed.join(", ");
+        
+                // Check if letter is in word.
+                let found = false;
+                for (let i = 0; i < optionChosen.length; i++) {
+                    if (optionChosen[i] === userGuess.toLowerCase()) {
+                        wordToSolve[i] = userGuess;
+                        document.getElementById("wordToSolve").innerHTML = wordToSolve.join(" ");
+                        found = true;
+                    }
+                }
+
+                // Decrement guesses remaining if letter not found
+                if (!found) {
+                    guessesRemaining--;
+                    document.getElementById("numGuessesRemaining").innerHTML = "Number Guesses Remaining: " + guessesRemaining;
+                }
+
+                // Check if user guessed the word
+                let numBlanks = wordToSolve.indexOf('_');
+
+                if (numBlanks < 0) {
+                    wins++;
+                    document.getElementById("winScore").innerHTML = "Congratulations! Wins: " + wins;
+                }
+                else {
+                    if (guessesRemaining == 0) {
+                        losses++;
+                        document.getElementById("loseScore").innerHTML = "Game Over! Answer is: " + wordToSolve + " Losses: " + losses;
+                    }
+                }
+            };
+
+        </script>
+      
+      </body>
+
+</html>
