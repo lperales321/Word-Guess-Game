@@ -28,8 +28,8 @@ function startNewGame() {
 
   // Displays word to solve and the number of guesses remaining
   document.getElementById("wordToSolve").innerHTML = wordToSolve.join(" ");
-  document.getElementById("lettersUsed").innerHTML = "Letters Used: ";
-  document.getElementById("numGuessesRemaining").innerHTML = "Number Guesses Remaining: " + guessesRemaining;
+  document.getElementById("lettersUsed").innerHTML = "";
+  document.getElementById("numGuessesRemaining").innerHTML = guessesRemaining;
 }
 
 function clearArray(arrayToClear) {
@@ -51,7 +51,7 @@ document.onkeyup = function(event) {
 
   // Displays the key the user pressed.
   lettersUsed.push(userGuess);
-  document.getElementById("lettersUsed").innerHTML = "Letters Used: " + lettersUsed.join(", ");
+  document.getElementById("lettersUsed").innerHTML = lettersUsed.join(", ");
 
   // Check if letter is in word.
   let found = false;
@@ -66,7 +66,7 @@ document.onkeyup = function(event) {
   // Decrement guesses remaining if letter not found
   if (!found) {
     guessesRemaining--;
-    document.getElementById("numGuessesRemaining").innerHTML = "Number Guesses Remaining: " + guessesRemaining;
+    document.getElementById("numGuessesRemaining").innerHTML = guessesRemaining;
   }
 
   // Check if user guessed the word
@@ -74,14 +74,14 @@ document.onkeyup = function(event) {
 
   if (numBlanks < 0) {
     wins++;
-    document.getElementById("message").innerHTML = "Congratulations! You guessed correctly: " + optionChosen;
-    document.getElementById("winScore").innerHTML = "Total Wins: " + wins;
+    document.getElementById("message").innerHTML = "Congratulations! <br/> You guessed correctly: <br/>" + optionChosen;
+    document.getElementById("winScore").innerHTML = wins;
     startNewGame();
   }
   else if (guessesRemaining == 0) {
     losses++;
-    document.getElementById("message").innerHTML = "Game Over! Answer was: " + optionChosen;
-    document.getElementById("loseScore").innerHTML = "Total Losses: " + losses;
+    document.getElementById("message").innerHTML = "Game Over! <br/> Answer was: " + optionChosen;
+    document.getElementById("loseScore").innerHTML = losses;
     startNewGame();
   }
 };

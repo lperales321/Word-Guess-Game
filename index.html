@@ -7,21 +7,92 @@
     ​
         <!-- Added a link to Bootstrap-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/style.css">
     </head>
 
-    <body>
+    <body background="assets/images/horrorMovies.jpg">
+        <!-- Overall Bootstrap Grid -->
+        <div class="container">
 
-        <div id="game">
-            Guess the word below.
-            Press a letter to get started.
+            <!-- Jumbotron with Title -->
+            <div class="jumbotron">
+                <h1 class="text-center">
+                    <strong>Hangman's Horror</strong>
+                </h1>
+                <hr>
+            </div>
+
+            <div class="row" id="game">
+
+                <!-- Left Side-->
+                <div class="col-lg-6">
+
+                    <!--Word To Solve-->
+                    <div id="unsovledWord">
+                        <h4 class="card-header">Guess the word below. <br/> Press a letter to get started.</h4>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h3 id="wordToSolve"></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Letters Used-->
+                    <div id="letters">
+                        <h4 class="card-header">Letters Guessed</h4>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h4 id="lettersUsed"></h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Guesses Remaining-->
+                    <div id="remaining">
+                        <h4 class="card-header">Numbers of Guesses Remaining</h4>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h3 id="numGuessesRemaining"></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side-->
+                <div class="col-lg-6">
+
+                    <!--Message-->
+                    <div id="remaining">
+                        <h4 class="card-header">Hint: Theme is Horror Movies Name or Characters<br/></h4>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h2 id="message"></h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Total Wins-->
+                    <div id="wins">
+                        <h3 class="card-header">Total Wins</h3>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h3 id="winScore"></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Total Losses-->
+                    <div id="wins">
+                        <h3 class="card-header">Total Losses</h3>
+                        <div class="card-body">
+                            <div class="text-center">
+                                <h3 id="loseScore"></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      
-        <p id="wordToSolve"></p>
-        <p id="lettersUsed"></p>
-        <p id="numGuessesRemaining"></p>
-        <p id="message"></p>
-        <p id="winScore"></p>
-        <p id="loseScore"></p>
 
         <!-- Add link to the javascript -->
         <script type="text/javascript" src="assets/javascript/game.js"></script>
