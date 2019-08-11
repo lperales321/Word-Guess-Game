@@ -1,41 +1,87 @@
-// Creates an array that lists out all of the options (Rock, Paper, or Scissors).
-const computerChoices = ["r", "p", "s"];
-let userScore = 0;
-let computerScore = 0;
-let tieScore = 0;
+// Creates an array of words to solve
+const options = ["krueger", "pennywise", "amityville horror", "carrie", "leatherface", "chucky", "voorhees", "exorcist",
+"dracula", "jack torrance", "pinhead", "nosferatu", "the shining", "ghostface", "candyman", "michael myers",
+"hannibal lecter", "xenomorph", "jigsaw", "norman bates", "crypt keeper"];
+const wordToSolve = [];
+const lettersUsed = [];
+let optionChosen = "";
+let wins = 0;
+let losses = 0;
+let guessesRemaining = 15;
+
+function startNewGame() {
+  // Randomly chooses a word from the options array.
+  optionChosen = options[Math.floor(Math.random() * options.length)];
+  clearArray(lettersUsed);
+  clearArray(wordToSolve);
+  guessesRemaining = 15;
+
+  // Sets "blanks" for each letter in word
+  for (let i = 0; i < optionChosen.length; i++) {
+    if (optionChosen.charAt(i) !== ' ') {
+    wordToSolve[i] = '_';
+    }
+    else {
+    wordToSolve[i] = '&nbsp&nbsp';
+    }
+  }
+
+  // Displays word to solve and the number of guesses remaining
+  document.getElementById("wordToSolve").innerHTML = wordToSolve.join(" ");
+  document.getElementById("lettersUsed").innerHTML = "Letters Used: ";
+  document.getElementById("numGuessesRemaining").innerHTML = "Number Guesses Remaining: " + guessesRemaining;
+}
+
+function clearArray(arrayToClear) {
+  while(arrayToClear.length > 0) {
+    arrayToClear.pop();
+  }
+}
+
+startNewGame();
 
 // This function is run whenever the user presses a key.
 document.onkeyup = function(event) {
 
+  //Clear message
+  document.getElementById("message").innerHTML = "";
+
   // Determines which key was pressed.
   let userGuess = event.key;
 
-  // Randomly chooses a choice from the options array. This is the Computer's guess.
-  //Math.random chooses number between 0 and 1
-  let computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+  // Displays the key the user pressed.
+  lettersUsed.push(userGuess);
+  document.getElementById("lettersUsed").innerHTML = "Letters Used: " + lettersUsed.join(", ");
 
-  // Alerts the key the user pressed (userGuess).
-  alert("User guess: " + userGuess);
-
-  // Alerts the Computer's guess.
-  alert("Computer guess: " + computerGuess);
-
-  if (userGuess === 'r' || userGuess === 's' || userGuess === 'p') {
-    if (userGuess === computerGuess) {
-      tieScore++;
+  // Check if letter is in word.
+  let found = false;
+  for (let i = 0; i < optionChosen.length; i++) {
+    if (optionChosen[i] === userGuess.toLowerCase()) {
+      wordToSolve[i] = userGuess;
+      document.getElementById("wordToSolve").innerHTML = wordToSolve.join(" ");
+      found = true;
     }
-    else if ((userGuess === 'r' && computerGuess === 's') || 
-        (userGuess === 'p' && computerGuess === 'r') || 
-        (userGuess === 's' && computerGuess === 'p')) {
-      userScore++;
-    }
-    else {
-      computerScore++;
-    }
-  };
+  }
 
-  document.getElementById("userScore").innerHTML = "User Score: " + userScore;
-  document.getElementById("computerScore").innerHTML = "Computer Score: " + computerScore;
-  document.getElementById("tieScore").innerHTML = "Tie: " + tieScore;
+  // Decrement guesses remaining if letter not found
+  if (!found) {
+    guessesRemaining--;
+    document.getElementById("numGuessesRemaining").innerHTML = "Number Guesses Remaining: " + guessesRemaining;
+  }
 
+  // Check if user guessed the word
+  let numBlanks = wordToSolve.indexOf('_');
+
+  if (numBlanks < 0) {
+    wins++;
+    document.getElementById("message").innerHTML = "Congratulations! You guessed correctly: " + optionChosen;
+    document.getElementById("winScore").innerHTML = "Total Wins: " + wins;
+    startNewGame();
+  }
+  else if (guessesRemaining == 0) {
+    losses++;
+    document.getElementById("message").innerHTML = "Game Over! Answer was: " + optionChosen;
+    document.getElementById("loseScore").innerHTML = "Total Losses: " + losses;
+    startNewGame();
+  }
 };
